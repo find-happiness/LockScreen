@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 25
+  buildToolsVersion "25.0.0"
+  defaultConfig {
+    applicationId "com.yudong.fitnewdome"
+    minSdkVersion 15
+    targetSdkVersion 25
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  signingConfigs {
+    // You must set up an environment var before release signing
+    // Run: export APP_KEY={password}
+    // TODO Add your release keystore in /keystore folder
+    release {
+      storeFile file('keystore/release.jks')
+      keyAlias 'alias'
+      storePassword "$System.env.APP_KEY"
+      keyPassword "$System.env.APP_KEY"
+    }
+
+    debug {
+      storeFile file('keystore/debug.jks')
+      keyAlias 'yudong'
+      storePassword '123456'
+      keyPassword '123456'
+    }
+  }
+
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  compile 'com.android.support:appcompat-v7:25.0.0'
+  testCompile 'junit:junit:4.12'
+  compile project(':lockscreenlibrary')
+}
